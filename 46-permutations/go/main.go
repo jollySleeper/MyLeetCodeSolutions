@@ -7,7 +7,7 @@ import (
 
 func permute(nums []int) [][]int {
 	var ans [][]int
-	recursive_permute(0, nums, ans)
+	recursive_permute(0, nums, &ans)
 
 	return ans
 }
@@ -18,24 +18,17 @@ func swap(i int, j int, nums []int) {
 	nums[j] = temp
 }
 
-func recursive_permute(index int, nums []int, ans [][]int) {
-	fmt.Println("Ans = ", ans)
+func recursive_permute(index int, nums []int, ans *[][]int) {
 	if index >= len(nums) {
-		fmt.Println("Permutation = ", nums)
-
 		permutation := slices.Clone(nums)
-		// Pass By Reference Occuring Here
-		// Don't Know How to Pass 'nums' By Value
-		ans = append(ans, permutation)
-		fmt.Println("Ans = ", ans)
+		*ans = append(*ans, permutation)
 
 		return
 	}
 
 	for i := index; i < len(nums); i++ {
 		swap(index, i, nums)
-		fmt.Println("Ans = ", ans)
-		recursive_permute(index+1, nums, ans)
+		recursive_permute(index + 1, nums, ans)
 		swap(i, index, nums)
 	}
 }
